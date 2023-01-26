@@ -1,0 +1,44 @@
+#headingContainer, #subheadingContainer {
+    text-align: center;
+}
+
+#heading {
+    margin-top: 40px;
+}
+
+a {
+    text-decoration: none;
+}
+
+#addProductContainer {
+    display: block;
+    text-align: center;
+}
+
+#addProduct {
+    margin: auto;
+}
+
+ul {
+    list-style-type: none;
+    width: 200px;
+}
+
+#unorderedList {
+    display: inline-block;
+    text-align: left;
+    border-style: solid;
+    border-width: 1px;
+    padding: 5px;
+    margin-top: 2px;
+}
+
+#unorderedListContainer {
+    text-align: center;
+}
+
+
+
+
+
+
