@@ -1,4 +1,4 @@
-The goal of this web application is to help users, particularly those who has a very disorganized fridge and does not keep a good record of food expiry dates, to 
+The goal of this web application is to help users, particularly those who have a very disorganized fridge and do not keep a good record of food expiry dates, to 
 reduce food waste and prevent food poisoning.
 
 By providing a digital space for users to store information regarding their products (e.g. expiry date, name, description), this allows users to easily track the
