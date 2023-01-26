@@ -9,4 +9,4 @@ to food poisoning.
 
 When items are about to be expired (within 3 days), items will be listed in a red color, reminding users to cook them soon to avoid waste.
 
-Remaining items that are not due to expire anytime soon (> 3 days) are presented in a green color.
+Remaining items that are not due to expire anytime soon (> 3 days) are presented in a green font color.
