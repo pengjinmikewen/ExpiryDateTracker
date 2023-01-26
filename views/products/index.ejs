@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="/css/stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section id="headingContainer">
+        <h1 id="heading">Expiry Date Tracker</h1>
+    </section>
+
+    <section id="subheadingContainer">
+        Current items in the fridge:
+    </section>
+    
+    <section id="unorderedListContainer">
+        <ul id="unorderedList">
+            <% for (let product of products) { %>
+                <!-- for items that are expiring within 3 days, highlight in red -->
+                
+                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - parseInt(day); %>
+                <% const productYear = product.expiryDate.slice(0, 4) %>
+                <% const productMonth = product.expiryDate.slice(5,7) %>
+                <% const productDay = product.expiryDate.slice(8) %>
+                <!-- About to expire -->
+                <% if (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3)) { %>
+                    <li><a href="/products/<%=product._id%>" style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</a></li>
+                <!-- Already expired -->
+                <% } else if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
+                    <li><a href="/products/<%=product._id%>" style="color:brown"><%= product.expiryDate %> <%= product.title %> <i class="fa fa-trash-o" style="font-size:15px"></i> </a></li>
+                <!-- Not expiring any time soon -->
+                <% } else { %>
+                    <li><a href="/products/<%=product._id%>" style="color:green"><%= product.expiryDate %> <%= product.title %></a></li>
+                <% } %>
+            <% } %>
+
+        </ul>
+    </section>
+    <section id="addProductContainer">
+        <a href="/products/new" id="addProduct">Add Product</a>
+    </section>
+    <section>
+    </section>
+</body>
+</html>
