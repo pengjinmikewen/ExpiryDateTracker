@@ -55,6 +55,31 @@ app.get("/products", async (req, res) => {
     res.render("products/index", { products, currentDate, year, month, day });
 });
 
+// Cooking ideas route
+app.get("/products/cook", async (req, res) => {
+    const products = await Product.find().sort({ expiryDate: 1 });
+    // Get current date
+    let date = new Date();
+    let year = String(date.getFullYear());
+    // Ensuring that single digit months have a 0 in front of it to make format consistent
+    // with the one stored in mongodb
+    let month = date.getMonth() + 1;
+    if (month < 10) {
+        month = "0" + String(month);
+    } else {
+        month = String(month);
+    }
+    let day = date.getDate();
+    if (day < 10) {
+        day = "0" + String(day);
+    } else {
+        day = String(day);
+    }
+
+    const currentDate = year + "-" + month + "-" + day;
+    res.render("products/cook", { products, currentDate, year, month, day });
+});
+
 
 /*
 app.get("/products", async (req, res) => {

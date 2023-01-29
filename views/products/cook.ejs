@@ -7,9 +7,12 @@
     <title>Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/css/stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- not possible to link JS file to EJS (<script src="/js/search-input.js"></script>), so will do so by directly placing code in here  -->
+    
+    
+    <link rel="stylesheet" href="/css/stylesheet.css">
+    
+    <!-- not possible to link JS file to EJS (<script src="/js/search-input.js"></script>), so will do so by directly pasting code at the bottom  -->
 </head>
 <body>
     <section id="headingContainer">
@@ -19,7 +22,7 @@
     <section id="container">
         <div class="btn-group btn-group-sm">
             <a href="/products" class="btn btn-primary active" aria-current="page" id="allProductsButton">All Products</a>
-            <a href="/products/cook" class="btn btn-primary active" aria-current="page" id="cookingButton">Cooking Ideas</a>
+            <a href="/products/cook.ejs" class="btn btn-primary active" aria-current="page" id="cookingButton">Cooking Ideas</a>
         </div>
     </section>
 
@@ -32,10 +35,13 @@
     <section id="unorderedListContainer">
         <input type="text" placeholder="Seach Here..." id="search-input">
         
+        
         <a href="/products/new" id="addProduct">Add</a>
+      
 
         <br>
 
+        
         <ul id="unorderedList">
             <% for (let product of products) { %>
                 <!-- for items that are expiring within 3 days, highlight in red -->
@@ -46,18 +52,24 @@
                 <% const productDay = product.expiryDate.slice(8) %>
                 <!-- About to expire -->
                 <% if (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3)) { %>
-                    <li class="listItem"><a href="/products/<%=product._id%>" style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</a></li>
+                    <li class="listItem"><input type="checkbox" id="<%= product.id %>" value="<%= product.title %>"><label for="<%= product.id %>" style="color:red"><%= product.expiryDate %> <%= product.title %></label></li>
                 <!-- Already expired -->
                 <% } else if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
-                    <li class="listItem"><a href="/products/<%=product._id%>" style="color:brown"><%= product.expiryDate %> <%= product.title %> <i class="fa fa-trash-o" style="font-size:15px"></i> </a></li>
+                    <li class="listItem"><input type="checkbox" id="<%= product.id %>" value="<%= product.title %>"><label for="<%= product.id %>" style="color:brown"><%= product.expiryDate %> <%= product.title %></label></li>
                 <!-- Not expiring any time soon -->
                 <% } else { %>
-                    <li class="listItem"><a href="/products/<%=product._id%>" style="color:green"><%= product.expiryDate %> <%= product.title %></a></li>
+                    <li class="listItem"><input type="checkbox" id="<%= product.id %>" value="<%= product.title %>"><label for="<%= product.id %>" style="color:green"><%= product.expiryDate %> <%= product.title %></label></li>
                 <% } %>
             <% } %>
 
         </ul>
+        <br>
+
+        <button id="findRecipes">Find Recipes</button>
+        
     </section>
+
+    <section id="content"></section>
     
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -80,6 +92,47 @@
                     e.style.display = "none";
                 }
             })
+        }
+    </script>
+
+    <!-- Script for Cook recipe -->
+    <script>
+        let btnShow = document.querySelector("#findRecipes");
+
+        btnShow.addEventListener("click", () => {
+            let checkboxValues = document.querySelectorAll('input[type="checkbox"]:checked');
+            let searchString = "";
+            for (let i = 0; i < checkboxValues.length; i++) {
+                searchString += checkboxValues[i].defaultValue + " ";
+            }
+            sendApiRequest(searchString);
+        })
+
+        async function sendApiRequest(searchString) {
+            let app_id = "c109b0c8";
+            let app_key = "e4e730dc5cd38898e783c34ffa532179";
+            let response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&app_id=${app_id}&app_key=${app_key}&q=${searchString}`);
+            console.log(response);
+            let data = await response.json();
+            console.log(data);
+            useApiData(data);
+        }
+
+        function useApiData(data) {
+            let tagsAndContent = "";
+            for (let i = 0; i < data.hits.length; i++) {
+                tagsAndContent += `
+                <div class="card" style="width: 18rem;">
+                    <img src="${data.hits[i].recipe.image}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${data.hits[i].recipe.label}</h5>
+                        <p class="card-text">Meal type: ${data.hits[i].recipe.mealType} <br>Time: ${data.hits[i].recipe.totalTime} minutes <br> Source: ${data.hits[i].recipe.source}</p>
+                        <a href="${data.hits[i].recipe.url}" class="btn btn-primary">Visit Recipe</a>
+                    </div>
+                </div>
+                `;
+            }
+            document.querySelector("#content").innerHTML = tagsAndContent;
         }
     </script>
 </body>
