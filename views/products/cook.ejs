@@ -43,25 +43,48 @@
 
         
         <ul id="unorderedList">
+
             <% for (let product of products) { %>
                 <!-- for items that are expiring within 3 days, highlight in red -->
                 
-                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - parseInt(day); %>
-                <% const productYear = product.expiryDate.slice(0, 4) %>
-                <% const productMonth = product.expiryDate.slice(5,7) %>
-                <% const productDay = product.expiryDate.slice(8) %>
+                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - day; %>
+                <% const productYear = parseInt(product.expiryDate.slice(0,4)) %>
+                <% const productMonth = parseInt(product.expiryDate.slice(5,7)) %>
+                <% const productDay = parseInt(product.expiryDate.slice(8)) %>
+                
+                <!-- Expired -->
+                <% if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
+                    <li class="listItem">
+                        <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                        <label for="<%= product.id %>">
+                            <a href="/products/<%=product._id%>" style="color:brown">
+                                <%= product.expiryDate %> <%= product.title %> 
+                                <i class="fa fa-trash-o" style="font-size:15px"></i> 
+                            </a>
+                        </label>
+                    </li>
+
                 <!-- About to expire -->
-                <% if (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3)) { %>
-                    <li class="listItem"><input type="checkbox" id="<%= product.id %>" value="<%= product.title %>"><label for="<%= product.id %>" style="color:red"><%= product.expiryDate %> <%= product.title %></label></li>
-                <!-- Already expired -->
-                <% } else if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
-                    <li class="listItem"><input type="checkbox" id="<%= product.id %>" value="<%= product.title %>"><label for="<%= product.id %>" style="color:brown"><%= product.expiryDate %> <%= product.title %></label></li>
+                <!-- Same year, same month, dayDifference < 3 OR same year, product expiry is +1 month, dayDifference < 3 -->
+                <% } else if ( (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3) )  ||  ( (year == productYear && productMonth - month == 1) && ((totalDaysInCurrentMonth - day + productDay) < 3) )) { %>
+                    
+                    <li class="listItem">
+                        <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                        <label for="<%= product.id %>">
+                            <a href="/products/<%=product._id%>" style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</a>
+                        </label>
+                    </li>
+
                 <!-- Not expiring any time soon -->
                 <% } else { %>
-                    <li class="listItem"><input type="checkbox" id="<%= product.id %>" value="<%= product.title %>"><label for="<%= product.id %>" style="color:green"><%= product.expiryDate %> <%= product.title %></label></li>
+                    <li class="listItem">
+                        <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                        <label for="<%= product.id %>">
+                            <a href="/products/<%=product._id%>" style="color:green"><%= product.expiryDate %> <%= product.title %></a>
+                        </label>
+                    </li>
                 <% } %>
             <% } %>
-
         </ul>
         <br>
 

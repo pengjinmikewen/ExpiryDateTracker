@@ -40,16 +40,21 @@
             <% for (let product of products) { %>
                 <!-- for items that are expiring within 3 days, highlight in red -->
                 
-                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - parseInt(day); %>
-                <% const productYear = product.expiryDate.slice(0, 4) %>
-                <% const productMonth = product.expiryDate.slice(5,7) %>
-                <% const productDay = product.expiryDate.slice(8) %>
-                <!-- About to expire -->
-                <% if (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3)) { %>
-                    <li class="listItem"><a href="/products/<%=product._id%>" style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</a></li>
-                <!-- Already expired -->
-                <% } else if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
+                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - day; %>
+                <% const productYear = parseInt(product.expiryDate.slice(0,4)) %>
+                <% const productMonth = parseInt(product.expiryDate.slice(5,7)) %>
+                <% const productDay = parseInt(product.expiryDate.slice(8)) %>
+                
+                <!-- Expired -->
+                <% if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
                     <li class="listItem"><a href="/products/<%=product._id%>" style="color:brown"><%= product.expiryDate %> <%= product.title %> <i class="fa fa-trash-o" style="font-size:15px"></i> </a></li>
+
+                <!-- About to expire -->
+                <!-- Same year, same month, dayDifference < 3 OR same year, product expiry is +1 month, dayDifference < 3 -->
+                <% } else if ( (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3) )  ||  ( (year == productYear && productMonth - month == 1) && ((totalDaysInCurrentMonth - day + productDay) < 3) )) { %>
+                    
+                    <li class="listItem"><a href="/products/<%=product._id%>" style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</a></li>
+                
                 <!-- Not expiring any time soon -->
                 <% } else { %>
                     <li class="listItem"><a href="/products/<%=product._id%>" style="color:green"><%= product.expiryDate %> <%= product.title %></a></li>

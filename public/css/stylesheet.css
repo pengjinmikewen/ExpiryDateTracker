@@ -4,7 +4,7 @@
 
 #heading {
     margin-top: 40px;
-    background-color: aquamarine;
+    background-color: transparent;
    
 }
 
@@ -46,7 +46,14 @@ ul {
     text-align: center;
 }
 
+body {
+    background-image: url(/images/food.jpg);
+}
 
+section {
+    background-color: transparent;
+    background-size: 100% 100%;
+}
 
 
 
