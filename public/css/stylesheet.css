@@ -1,10 +1,12 @@
 #headingContainer, #subheadingContainer {
     text-align: center;
+    color: white;
 }
 
 #heading {
-    margin-top: 40px;
+    margin: 40px;
     background-color: transparent;
+    color: white;
    
 }
 
@@ -18,26 +20,21 @@ a {
 
 #container {
     text-align: center;
+    margin-bottom: 10px;
 }
 
 #addProduct {
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-    border-radius: 3px;
-    color: black;
+    color: white;
 }
 
 ul {
     list-style-type: none;
-    width: 200px;
+    width: auto;
 }
 
 #unorderedList {
     display: inline-block;
     text-align: left;
-    border-style: solid;
-    border-width: 1px;
     padding: 5px;
     margin-top: 2px;
 }
@@ -48,13 +45,33 @@ ul {
 
 body {
     background-image: url(/images/food.jpg);
+    
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 section {
     background-color: transparent;
-    background-size: 100% 100%;
+}
+
+li {
+    border-radius: 10px;
+    background-color: beige;
+    margin: 5px 0px;
+    font-size: x-large;
+    padding: 0px 8px;
+}
+
+#search-input {
+    width: 280px;
+    border-radius: 10px;
+    border-width: 0px;
+    font-size: large;
+
 }
 
 
-
-
+.card {
+    margin: 20px;
+    display: inline-block;
+}

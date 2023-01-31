@@ -15,9 +15,6 @@
     <!-- not possible to link JS file to EJS (<script src="/js/search-input.js"></script>), so will do so by directly pasting code at the bottom  -->
 </head>
 <body>
-    <section id="headingContainer">
-        <h1 id="heading">Expiry Date Tracker</h1>
-    </section>
 
     <section id="container">
         <div class="btn-group btn-group-sm">
@@ -26,17 +23,19 @@
         </div>
     </section>
 
+    <section id="headingContainer">
+        <h1 id="heading">Expiry Date Tracker</h1>
+    </section>
     
-
     <section id="subheadingContainer">
-        Current items in the fridge:
+        Select your ingredients:
     </section>
     
     <section id="unorderedListContainer">
         <input type="text" placeholder="Seach Here..." id="search-input">
         
         
-        <a href="/products/new" id="addProduct">Add</a>
+        <button class="btn btn-outline-light btn-sm" id="findRecipesButton">Recipes</button>
       
 
         <br>
@@ -88,7 +87,7 @@
         </ul>
         <br>
 
-        <button id="findRecipes">Find Recipes</button>
+        
         
     </section>
 
@@ -120,7 +119,7 @@
 
     <!-- Script for Cook recipe -->
     <script>
-        let btnShow = document.querySelector("#findRecipes");
+        let btnShow = document.querySelector("#findRecipesButton");
 
         btnShow.addEventListener("click", () => {
             let checkboxValues = document.querySelectorAll('input[type="checkbox"]:checked');
