@@ -12,6 +12,7 @@
     <!-- not possible to link JS file to EJS (<script src="/js/search-input.js"></script>), so will do so by directly placing code in here  -->
 </head>
 <body>
+
     <section id="container">
         <div class="btn-group btn-group-sm">
             <a href="/products" class="btn btn-primary active" aria-current="page" id="allProductsButton">All Products</a>
@@ -22,6 +23,7 @@
     <section id="headingContainer">
         <h1 id="heading">Expiry Date Tracker</h1>
     </section>
+    
 
     <section id="subheadingContainer">
         Current items in the fridge:
@@ -38,25 +40,61 @@
             <% for (let product of products) { %>
                 <!-- for items that are expiring within 3 days, highlight in red -->
                 
-                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - day; %>
+                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - day %>
                 <% const productYear = parseInt(product.expiryDate.slice(0,4)) %>
                 <% const productMonth = parseInt(product.expiryDate.slice(5,7)) %>
                 <% const productDay = parseInt(product.expiryDate.slice(8)) %>
                 
                 <!-- Expired -->
                 <% if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
-                    <li class="listItem"><a href="/products/<%=product._id%>" style="color:brown"><%= product.expiryDate %> <%= product.title %> <i class="fa fa-trash-o" style="font-size:15px"></i> </a></li>
+                    <li class="listItem">
+                        <a href="/products/<%=product._id%>" style="color:brown" class="separate">
+                            <div><%= product.title %></div> 
+                            &nbsp &nbsp <div><i class="fa fa-trash-o" style="font-size:25px"></i></div>
+                        </a>
+                    </li>
 
                 <!-- About to expire -->
-                <!-- Same year, same month, dayDifference < 3 OR same year, product expiry is +1 month, dayDifference < 3 -->
-                <% } else if ( (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3) )  ||  ( (year == productYear && productMonth - month == 1) && ((totalDaysInCurrentMonth - day + productDay) < 3) )) { %>
-                    
-                    <li class="listItem"><a href="/products/<%=product._id%>" style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</a></li>
+                <!-- (a) Same year, same month, dayDifference < 3 -->
+                <% } else if ( year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference <= 7) ) { %>
+                    <li class="listItem">
+                        <a href="/products/<%=product._id%>" style="color: red" class="separate">
+                            <div><%= product.title %></div>
+                            <% if (dayDifference == 0) { %>
+                                &nbsp &nbsp <div>0d</div>
+                            <% } else if (dayDifference == 1){ %>
+                                &nbsp &nbsp <div><%= dayDifference %>d</div>
+                            <% } else { %>
+                                &nbsp &nbsp <div><%= dayDifference %>d</div>
+                            <% } %>
+                        </a>
+                    </li>
+
+                <!-- (b) OR same year, product expiry is +1 month, dayDifference < 3 (&#9888;)-->
+                <% } else if ( (year == productYear && productMonth - month == 1) && (totalDaysInCurrentMonth - day + productDay >= 0 && totalDaysInCurrentMonth - day + productDay <= 7) ) { %>
+                    <li class="listItem">
+                        <a href="/products/<%=product._id%>" style="color: red">
+                            <%= product.title %> 
+                            <% if (totalDaysInCurrentMonth - day + productDay == 0) { %>
+                                &nbsp &nbsp 0d
+                            <% } else if (totalDaysInCurrentMonth - day + productDay == 1) { %>
+                                &nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d
+                            <% } else { %>
+                                &nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d 
+                            <% } %>
+                        </a>
+                    </li>
                 
                 <!-- Not expiring any time soon -->
                 <% } else { %>
-                    <li class="listItem"><a href="/products/<%=product._id%>" style="color:green"><%= product.expiryDate %> <%= product.title %></a></li>
+                    <li class="listItem">
+                        <a href="/products/<%=product._id%>" style="color:green" class="separate">
+                            <div><%= product.title %></div> 
+                            <div>&nbsp &nbsp >1w</div>
+                        </a>
+                    </li>
                 <% } %>
+                <!-- (1) > 1 year; (2) Same year, same month, >3 weeks; (3) Same year, diff month, >3 weeks -->
             <% } %>
 
         </ul>

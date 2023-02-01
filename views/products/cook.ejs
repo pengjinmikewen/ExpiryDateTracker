@@ -56,10 +56,10 @@
                     <li class="listItem">
                         <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
                         <label for="<%= product.id %>">
-                            <a href="/products/<%=product._id%>" style="color:brown">
+                            <span style="color:brown">
                                 <%= product.expiryDate %> <%= product.title %> 
                                 <i class="fa fa-trash-o" style="font-size:15px"></i> 
-                            </a>
+                            </span>
                         </label>
                     </li>
 
@@ -70,7 +70,7 @@
                     <li class="listItem">
                         <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
                         <label for="<%= product.id %>">
-                            <a href="/products/<%=product._id%>" style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</a>
+                            <span style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</span>
                         </label>
                     </li>
 
@@ -79,7 +79,7 @@
                     <li class="listItem">
                         <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
                         <label for="<%= product.id %>">
-                            <a href="/products/<%=product._id%>" style="color:green"><%= product.expiryDate %> <%= product.title %></a>
+                            <span style="color:green"><%= product.expiryDate %> <%= product.title %></span>
                         </label>
                     </li>
                 <% } %>

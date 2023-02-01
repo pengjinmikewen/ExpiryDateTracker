@@ -7,7 +7,12 @@
     margin: 40px;
     background-color: transparent;
     color: white;
-   
+    border-bottom: 1px solid white;
+}
+
+.separate {
+    display: flex;
+    justify-content: space-between;
 }
 
 a {
@@ -63,7 +68,9 @@ li {
 }
 
 #search-input {
-    width: 280px;
+    width: 200px;
+    height: 35px;
+    padding: 10px;
     border-radius: 10px;
     border-width: 0px;
     font-size: large;
