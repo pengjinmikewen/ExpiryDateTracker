@@ -20,8 +20,8 @@
         </div>
     </section>
 
-    <section id="headingContainer">
-        <h1 id="heading">Expiry Date Tracker</h1>
+    <section class="headingContainer">
+        <h1 class="heading">Expiry Date Tracker</h1>
     </section>
     
 
@@ -48,9 +48,9 @@
                 <!-- Expired -->
                 <% if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
                     <li class="listItem">
-                        <a href="/products/<%=product._id%>" style="color:brown" class="separate">
+                        <a href="/products/<%=product._id%>" style="color:brown" class="separateHorizontal">
                             <div><%= product.title %></div> 
-                            &nbsp &nbsp <div><i class="fa fa-trash-o" style="font-size:25px"></i></div>
+                            <div>&nbsp &nbsp <i class="fa fa-trash-o" style="font-size:25px"></i></div>
                         </a>
                     </li>
 
@@ -58,14 +58,14 @@
                 <!-- (a) Same year, same month, dayDifference < 3 -->
                 <% } else if ( year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference <= 7) ) { %>
                     <li class="listItem">
-                        <a href="/products/<%=product._id%>" style="color: red" class="separate">
+                        <a href="/products/<%=product._id%>" style="color: red" class="separateHorizontal">
                             <div><%= product.title %></div>
                             <% if (dayDifference == 0) { %>
-                                &nbsp &nbsp <div>0d</div>
+                                <div>&nbsp &nbsp 0d</div>
                             <% } else if (dayDifference == 1){ %>
-                                &nbsp &nbsp <div><%= dayDifference %>d</div>
+                                <div>&nbsp &nbsp <%= dayDifference %>d</div>
                             <% } else { %>
-                                &nbsp &nbsp <div><%= dayDifference %>d</div>
+                                <div>&nbsp &nbsp <%= dayDifference %>d</div>
                             <% } %>
                         </a>
                     </li>
@@ -73,14 +73,14 @@
                 <!-- (b) OR same year, product expiry is +1 month, dayDifference < 3 (&#9888;)-->
                 <% } else if ( (year == productYear && productMonth - month == 1) && (totalDaysInCurrentMonth - day + productDay >= 0 && totalDaysInCurrentMonth - day + productDay <= 7) ) { %>
                     <li class="listItem">
-                        <a href="/products/<%=product._id%>" style="color: red">
-                            <%= product.title %> 
+                        <a href="/products/<%=product._id%>" style="color: red" class="separateHorizontal">
+                            <div><%= product.title %></div>
                             <% if (totalDaysInCurrentMonth - day + productDay == 0) { %>
-                                &nbsp &nbsp 0d
+                                <div>&nbsp &nbsp 0d</div>
                             <% } else if (totalDaysInCurrentMonth - day + productDay == 1) { %>
-                                &nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d
+                                <div>&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
                             <% } else { %>
-                                &nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d 
+                                <div>&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
                             <% } %>
                         </a>
                     </li>
@@ -88,7 +88,7 @@
                 <!-- Not expiring any time soon -->
                 <% } else { %>
                     <li class="listItem">
-                        <a href="/products/<%=product._id%>" style="color:green" class="separate">
+                        <a href="/products/<%=product._id%>" style="color:green" class="separateHorizontal">
                             <div><%= product.title %></div> 
                             <div>&nbsp &nbsp >1w</div>
                         </a>

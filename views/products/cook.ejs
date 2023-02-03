@@ -23,8 +23,8 @@
         </div>
     </section>
 
-    <section id="headingContainer">
-        <h1 id="heading">Expiry Date Tracker</h1>
+    <section class="headingContainer">
+        <h1 class="heading">Expiry Date Tracker</h1>
     </section>
     
     <section id="subheadingContainer">
@@ -39,9 +39,10 @@
       
 
         <br>
-
         
         <ul id="unorderedList">
+
+           
 
             <% for (let product of products) { %>
                 <!-- for items that are expiring within 3 days, highlight in red -->
@@ -53,34 +54,69 @@
                 
                 <!-- Expired -->
                 <% if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
-                    <li class="listItem">
-                        <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
-                        <label for="<%= product.id %>">
-                            <span style="color:brown">
-                                <%= product.expiryDate %> <%= product.title %> 
-                                <i class="fa fa-trash-o" style="font-size:15px"></i> 
-                            </span>
-                        </label>
+                    <li class="listItem separateHorizontal">
+                        <div>
+                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                            <label for="<%= product.id %>">
+                                <span style="color:brown">
+                                    <%= product.title %>
+                                    
+                                </span>
+                            </label>
+                        </div>
+                        <div style="color:brown">&nbsp &nbsp<i class="fa fa-trash-o" style="font-size:25px"></i></div>
                     </li>
 
                 <!-- About to expire -->
-                <!-- Same year, same month, dayDifference < 3 OR same year, product expiry is +1 month, dayDifference < 3 -->
-                <% } else if ( (year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference < 3) )  ||  ( (year == productYear && productMonth - month == 1) && ((totalDaysInCurrentMonth - day + productDay) < 3) )) { %>
-                    
-                    <li class="listItem">
-                        <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
-                        <label for="<%= product.id %>">
-                            <span style="color: red"><%= product.expiryDate %> <%= product.title %> &#9888;</span>
-                        </label>
+                <!-- (a) -->
+                <% } else if ( year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference <= 7) ) { %>
+                    <li class="listItem separateHorizontal">
+                        <div>
+                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                            <label for="<%= product.id %>">
+                                <span style="color: red"><%= product.title %></span>
+                            </label>
+                        </div>
+                        <% if (dayDifference == 0) { %>
+                            <div style="color: red">&nbsp &nbsp 0d</div>
+                        <% } else if (dayDifference == 1){ %>
+                            <div style="color: red">&nbsp &nbsp <%= dayDifference %>d</div>
+                        <% } else { %>
+                            <div style="color: red">&nbsp &nbsp <%= dayDifference %>d</div>
+                        <% } %>
                     </li>
+
+                <!-- (b) -->
+                <% } else if ( (year == productYear && productMonth - month == 1) && (totalDaysInCurrentMonth - day + productDay >= 0 && totalDaysInCurrentMonth - day + productDay <= 7) ) { %>
+
+                    <li class="listItem separateHorizontal">
+                        <div>
+                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                            <label for="<%= product.id %>">
+                                <span style="color: red"><%= product.title %></span>
+                            </label>
+                        </div>
+                        <% if (totalDaysInCurrentMonth - day + productDay == 0) { %>
+                            <div style="color: red">&nbsp &nbsp 0d</div>
+                        <% } else if (totalDaysInCurrentMonth - day + productDay == 1) { %>
+                            <div style="color: red">&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
+                        <% } else { %>
+                            <div style="color: red">&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
+                        <% } %>
+                    </li>
+
+
 
                 <!-- Not expiring any time soon -->
                 <% } else { %>
-                    <li class="listItem">
-                        <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
-                        <label for="<%= product.id %>">
-                            <span style="color:green"><%= product.expiryDate %> <%= product.title %></span>
-                        </label>
+                    <li class="listItem separateHorizontal">
+                        <div>
+                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                            <label for="<%= product.id %>">
+                                <span style="color:green"><%= product.title %></span>
+                            </label>
+                        </div>
+                        <div style="color:green">&nbsp &nbsp >1w</div>
                     </li>
                 <% } %>
             <% } %>
@@ -91,7 +127,10 @@
         
     </section>
 
-    <section id="content"></section>
+    <section id="content">
+        
+
+    </section>
     
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -141,20 +180,57 @@
         }
 
         function useApiData(data) {
-            let tagsAndContent = "";
+
+            /*
+            <div class="container">
+                <div class="row gy-3 justify-content-center">
+                    <!-- In bootstrap 5 it's mobile first -->
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="card h-100" style="width: 18rem;" class="card-img-top">
+                            <img src="https://www.aquariumsource.com/wp-content/uploads/2022/12/ranchu-goldfish.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+            */
+
+            let tagsAndContent = "<div class='headingContainer'><h1 class='heading'>Recipes</h1></div>";
+            tagsAndContent += "<div class='container'>";
+            tagsAndContent += "<div class='row gy-4'>";
+
+            let counter = 0;
             for (let i = 0; i < data.hits.length; i++) {
+                // For every 4th element, add <div class="row">
+                if (counter % 4 == 0 && i != 0) {
+                    tagsAndContent += "</div><br><div class='row gy-4'>";
+                    counter = 0;
+                } //style="width: 18rem;
                 tagsAndContent += `
-                <div class="card" style="width: 18rem;">
-                    <img src="${data.hits[i].recipe.image}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${data.hits[i].recipe.label}</h5>
-                        <p class="card-text">Meal type: ${data.hits[i].recipe.mealType} <br>Time: ${data.hits[i].recipe.totalTime} minutes <br> Source: ${data.hits[i].recipe.source}</p>
-                        <a href="${data.hits[i].recipe.url}" class="btn btn-primary">Visit Recipe</a>
+                <div class="col-12 col-md-6 col-xxl-3">
+                    <div class="card h-100" style="width:18rem" class="card-img-top">  
+                        <img src="${data.hits[i].recipe.image}"  class="card-img-top">
+                        <div class="card-body separateVertical">
+                            <div>
+                                <h5 class="card-title">${data.hits[i].recipe.label}</h5>
+                                <p class="card-text">Meal type: ${data.hits[i].recipe.mealType} <br>Time: ${data.hits[i].recipe.totalTime} minutes <br> Source: ${data.hits[i].recipe.source}</p>
+                            </div>
+                            <div>
+                                <a href="${data.hits[i].recipe.url}" class="btn btn-primary">Visit Recipe</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 `;
+                counter ++;
             }
+            tagsAndContent += "</div>" // closing for row
+            tagsAndContent += "</div>" // closing for container
+
             document.querySelector("#content").innerHTML = tagsAndContent;
+            // Wait til all cards are loaded before directing them to cards
+            document.getElementById('content').scrollIntoView();
         }
     </script>
 </body>

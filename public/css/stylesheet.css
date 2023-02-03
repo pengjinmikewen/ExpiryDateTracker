@@ -1,17 +1,24 @@
-#headingContainer, #subheadingContainer {
+.headingContainer, #subheadingContainer {
     text-align: center;
     color: white;
 }
 
-#heading {
-    margin: 40px;
+.heading {
     background-color: transparent;
     color: white;
     border-bottom: 1px solid white;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
 }
 
-.separate {
+.separateHorizontal {
     display: flex;
+    justify-content: space-between;
+}
+
+.separateVertical {
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -64,7 +71,7 @@ li {
     background-color: beige;
     margin: 5px 0px;
     font-size: x-large;
-    padding: 0px 8px;
+    padding: 0px 10px;
 }
 
 #search-input {
@@ -77,8 +84,7 @@ li {
 
 }
 
-
 .card {
-    margin: 20px;
-    display: inline-block;
+    margin: 0 auto; /* Added */
+    margin-bottom: 20px; /* Added */
 }
