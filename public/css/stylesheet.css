@@ -109,3 +109,7 @@ li {
     color:#7a431d;
     font-weight:500
 }
+
+li:last-child {
+    margin-bottom: 25px;
+}

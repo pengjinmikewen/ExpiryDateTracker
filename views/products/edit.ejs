@@ -27,19 +27,18 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea name="product[description]" id="description" cols="30" rows="10" class="form-control" id="exampleFormControlTextarea1"><%=product.description%></textarea>
+            <textarea name="product[description]" id="description" cols="30" rows="9" class="form-control" id="exampleFormControlTextarea1"><%=product.description%></textarea>
         </div>
 
         <div class="container">
-            <div>
-                <button type="button" class="btn btn-secondary"><a href="/products"><i class="fa fa-home fa-md"></i>  Home</a></button>
-            </div>
+            <div></div>
             <div>
                 <button type="button" class="btn btn-secondary"><a href="/products/<%= product._id%>">&lt;  Back</a></button>
             </div>
             <div>
                 <button type="submit" class="btn btn-success">Update</button>
             </div>
+            <div></div>
         </div>
 
     </form>
