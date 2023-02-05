@@ -1,0 +1,52 @@
+form, #showButtons {   
+    width: 300px; 
+    margin: auto;
+    color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.headingContainer {
+    text-align: center;
+    color: white;
+}
+
+.heading {
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid white;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+
+body {
+    background-image: url(/images/food.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.navBar {
+    display: inline;
+}
+
+.navBarContainer {
+    display: flex;
+    padding: 0px 70px;
+    border-width: 0.5px;
+    border-color:#7a431d;
+    border-style:solid;
+    
+}
+
+.navbar-brand {
+    color:#7a431d;
+    font-weight:500
+}

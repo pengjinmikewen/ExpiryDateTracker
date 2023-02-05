@@ -6,19 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-
     <link rel="stylesheet" href="/css/stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- not possible to link JS file to EJS (<script src="/js/search-input.js"></script>), so will do so by directly placing code in here  -->
 </head>
 <body>
-
-    <section id="container">
-        <div class="btn-group btn-group-sm">
-            <a href="/products" class="btn btn-primary active" aria-current="page" id="allProductsButton">All Products</a>
-            <a href="/products/cook" class="btn btn-primary active" aria-current="page" id="cookingButton">Cooking Ideas</a>
-        </div>
-    </section>
 
     <section class="headingContainer">
         <h1 class="heading">Expiry Date Tracker</h1>
@@ -26,7 +18,7 @@
     
 
     <section id="subheadingContainer">
-        Current items in the fridge:
+        Current items:
     </section>
     
     <section id="unorderedListContainer">
@@ -99,6 +91,11 @@
 
         </ul>
     </section>
+
+    <nav class="navbar fixed-bottom bg-body-tertiary navBarContainer">
+        <a class="navbar-brand" href="/products">Home</a>
+        <a class="navbar-brand" href="/products/cook">Cook</a>
+    </nav>
     
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
