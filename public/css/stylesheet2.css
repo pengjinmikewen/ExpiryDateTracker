@@ -1,6 +1,5 @@
 body {
     background-image: url(/images/food.jpg);
-    
     background-size: cover;
     background-attachment: fixed;
 }

@@ -15,117 +15,119 @@
     <!-- not possible to link JS file to EJS (<script src="/js/search-input.js"></script>), so will do so by directly pasting code at the bottom  -->
 </head>
 <body>
-
-    <section class="headingContainer">
-        <h1 class="heading">Expiry Date Tracker</h1>
+    <section class="body1">
+        <section class="headingContainer">
+            <h1 class="heading">Expiry Date Tracker</h1>
+        </section>
     </section>
     
-    <section id="subheadingContainer">
-        Select your ingredients:
-    </section>
-    
-    <section id="unorderedListContainer">
-        <input type="text" placeholder="Seach Here..." id="search-input">
+    <section class="body2">
+        <section id="subheadingContainer">
+            Select your ingredients:
+        </section>
         
+        <section id="unorderedListContainer">
+            <input type="text" placeholder="Seach Here..." id="search-input">
+            
+            
+            <button class="btn btn-outline-light btn-sm" id="findRecipesButton">Recipes</button>
         
-        <button class="btn btn-outline-light btn-sm" id="findRecipesButton">Recipes</button>
-      
+            <br>
+            
+            <ul id="unorderedList">
 
-        <br>
-        
-        <ul id="unorderedList">
+                <% for (let product of products) { %>
+                    <!-- for items that are expiring within 3 days, highlight in red -->
+                    
+                    <% const dayDifference = parseInt(product.expiryDate.slice(8)) - day; %>
+                    <% const productYear = parseInt(product.expiryDate.slice(0,4)) %>
+                    <% const productMonth = parseInt(product.expiryDate.slice(5,7)) %>
+                    <% const productDay = parseInt(product.expiryDate.slice(8)) %>
+                    
+                    <!-- Expired -->
+                    <% if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
+                        <li class="listItem separateHorizontal">
+                            <div>
+                                <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                                <label for="<%= product.id %>">
+                                    <span style="color:brown">
+                                        <%= product.title %>
+                                    </span>
+                                </label>
+                            </div>
+                            <div style="color:brown">&nbsp &nbsp<i class="fa fa-trash-o" style="font-size:25px"></i></div>
+                        </li>
 
-           
+                    <!-- About to expire -->
+                    <!-- (a) -->
+                    <% } else if ( year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference <= 7) ) { %>
+                        <li class="listItem separateHorizontal">
+                            <div>
+                                <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                                <label for="<%= product.id %>">
+                                    <span style="color: red"><%= product.title %></span>
+                                </label>
+                            </div>
+                            <% if (dayDifference == 0) { %>
+                                <div style="color: red">&nbsp &nbsp 0d</div>
+                            <% } else if (dayDifference == 1){ %>
+                                <div style="color: red">&nbsp &nbsp <%= dayDifference %>d</div>
+                            <% } else { %>
+                                <div style="color: red">&nbsp &nbsp <%= dayDifference %>d</div>
+                            <% } %>
+                        </li>
 
-            <% for (let product of products) { %>
-                <!-- for items that are expiring within 3 days, highlight in red -->
-                
-                <% const dayDifference = parseInt(product.expiryDate.slice(8)) - day; %>
-                <% const productYear = parseInt(product.expiryDate.slice(0,4)) %>
-                <% const productMonth = parseInt(product.expiryDate.slice(5,7)) %>
-                <% const productDay = parseInt(product.expiryDate.slice(8)) %>
-                
-                <!-- Expired -->
-                <% if (year > productYear || (year == productYear && month > productMonth) || (year == productYear && month == productMonth && dayDifference < 0)) { %>
-                    <li class="listItem separateHorizontal">
-                        <div>
-                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
-                            <label for="<%= product.id %>">
-                                <span style="color:brown">
-                                    <%= product.title %>
-                                    
-                                </span>
-                            </label>
-                        </div>
-                        <div style="color:brown">&nbsp &nbsp<i class="fa fa-trash-o" style="font-size:25px"></i></div>
-                    </li>
+                    <!-- (b) -->
+                    <% } else if ( (year == productYear && productMonth - month == 1) && (totalDaysInCurrentMonth - day + productDay >= 0 && totalDaysInCurrentMonth - day + productDay <= 7) ) { %>
 
-                <!-- About to expire -->
-                <!-- (a) -->
-                <% } else if ( year == productYear && month == productMonth && (dayDifference >= 0 && dayDifference <= 7) ) { %>
-                    <li class="listItem separateHorizontal">
-                        <div>
-                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
-                            <label for="<%= product.id %>">
-                                <span style="color: red"><%= product.title %></span>
-                            </label>
-                        </div>
-                        <% if (dayDifference == 0) { %>
-                            <div style="color: red">&nbsp &nbsp 0d</div>
-                        <% } else if (dayDifference == 1){ %>
-                            <div style="color: red">&nbsp &nbsp <%= dayDifference %>d</div>
-                        <% } else { %>
-                            <div style="color: red">&nbsp &nbsp <%= dayDifference %>d</div>
-                        <% } %>
-                    </li>
-
-                <!-- (b) -->
-                <% } else if ( (year == productYear && productMonth - month == 1) && (totalDaysInCurrentMonth - day + productDay >= 0 && totalDaysInCurrentMonth - day + productDay <= 7) ) { %>
-
-                    <li class="listItem separateHorizontal">
-                        <div>
-                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
-                            <label for="<%= product.id %>">
-                                <span style="color: red"><%= product.title %></span>
-                            </label>
-                        </div>
-                        <% if (totalDaysInCurrentMonth - day + productDay == 0) { %>
-                            <div style="color: red">&nbsp &nbsp 0d</div>
-                        <% } else if (totalDaysInCurrentMonth - day + productDay == 1) { %>
-                            <div style="color: red">&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
-                        <% } else { %>
-                            <div style="color: red">&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
-                        <% } %>
-                    </li>
+                        <li class="listItem separateHorizontal">
+                            <div>
+                                <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                                <label for="<%= product.id %>">
+                                    <span style="color: red"><%= product.title %></span>
+                                </label>
+                            </div>
+                            <% if (totalDaysInCurrentMonth - day + productDay == 0) { %>
+                                <div style="color: red">&nbsp &nbsp 0d</div>
+                            <% } else if (totalDaysInCurrentMonth - day + productDay == 1) { %>
+                                <div style="color: red">&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
+                            <% } else { %>
+                                <div style="color: red">&nbsp &nbsp <%= totalDaysInCurrentMonth - day + productDay %>d</div>
+                            <% } %>
+                        </li>
 
 
 
-                <!-- Not expiring any time soon -->
-                <% } else { %>
-                    <li class="listItem separateHorizontal">
-                        <div>
-                            <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
-                            <label for="<%= product.id %>">
-                                <span style="color:green"><%= product.title %></span>
-                            </label>
-                        </div>
-                        <div style="color:green">&nbsp &nbsp >1w</div>
-                    </li>
+                    <!-- Not expiring any time soon -->
+                    <% } else { %>
+                        <li class="listItem separateHorizontal">
+                            <div>
+                                <input type="checkbox" id="<%= product.id %>" value="<%= product.title %>">
+                                <label for="<%= product.id %>">
+                                    <span style="color:green"><%= product.title %></span>
+                                </label>
+                            </div>
+                            <div style="color:green">&nbsp &nbsp >1w</div>
+                        </li>
+                    <% } %>
                 <% } %>
-            <% } %>
-        </ul>
-        <br>
-        
-    </section>
+            </ul>
+            <br>
+            
+        </section>
 
-    <section id="content">
-        
-    </section>
+        <section id="content">
+            
+        </section>
 
-    <nav class="navbar fixed-bottom bg-body-tertiary navBarContainer">
-        <a class="navbar-brand" href="/products">Home</a>
-        <a class="navbar-brand" href="/products/cook">Cook</a>
-    </nav>
+        <nav class="navbar fixed-bottom navBarContainer separateHorizontal">
+            <div></div>
+            <a class="navbar-brand" href="/products">Home</a>
+            <div></div>
+            <a class="navbar-brand" href="/products/cook">Cook</a>
+            <div></div>
+        </nav>
+    </section>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

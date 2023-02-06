@@ -4,6 +4,11 @@ form, #showButtons {
     color: white;
 }
 
+#showButtons, #editButtons, #newButtons {
+    
+    padding-bottom: 70px;
+}
+
 a {
     color: white;
     text-decoration: none;
@@ -21,32 +26,38 @@ a {
 
 .heading {
     background-color: transparent;
-    color: white;
-    border-bottom: 1px solid white;
-    padding-bottom: 30px;
-    margin-bottom: 30px;
+    color: beige;
+    padding: 25px 0px;
+    margin: 0px 0px;
 }
 
-body {
+
+.body1 {
+    background-color: olive;
+}
+
+.body2 {
     background-image: url(/images/food.jpg);
     background-size: cover;
     background-attachment: fixed;
+    background-position: 50%;
+    padding-top: 20px;
+    
 }
 
 .navBar {
     display: inline;
 }
 
+
+
 .navBarContainer {
     display: flex;
     padding: 0px 70px;
-    border-width: 0.5px;
-    border-color:#7a431d;
-    border-style:solid;
-    
+    background-color: olive;
 }
 
 .navbar-brand {
-    color:#7a431d;
+    color:cornsilk;
     font-weight:500
 }

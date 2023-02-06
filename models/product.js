@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const ProductSchema = new Schema({
     title: String,
     expiryDate: String,
-    location: String,
     description: String
 })
 
