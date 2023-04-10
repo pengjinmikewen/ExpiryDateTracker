@@ -2,8 +2,6 @@
     text-align: center;
 }
 
-
-
 #subheadingContainer {
     font-size: large;
     color: white;
@@ -70,6 +68,7 @@ ul {
     background-attachment: fixed;
     background-position: 50%;
     padding-top: 20px;
+    height: 800px;
 }
 
 section {
