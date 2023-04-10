@@ -3,7 +3,9 @@ This is a web application that aims to reduce household food waste by providing 
 The application displays items expiring soon at the top of the list, making it easy to identify items that need to be consumed first. In addition, the application offers the option to generate recipes based on selected ingredients, helping users make the most of their food supplies. The goal is to help people save money and reduce food waste, while also making meal planning more convenient and enjoyable.
 
 ## An overview of user interfaces:
-
+From "Home", users can view all the items in their fridge, along with the number of days until they expire and the level of urgency depicted by colors. Once an item is added, users can edit its title, expiry date, description or delete. Upon visiting "Cook", users can select desired items as ingredients that can be subsequently used to generate recipes. When users decide to "Visit Recipe", this takes them to the source website with specific instructions for cooking the dish.
+<br>
+<br>
 ![S6](https://user-images.githubusercontent.com/110277668/230890460-2f5961ca-21bd-4be2-b6d1-330b06a8ec8d.png)
 ![S5](https://user-images.githubusercontent.com/110277668/230890446-e62a0441-5683-44bd-862d-03c522f1e394.png)
 ![S4](https://user-images.githubusercontent.com/110277668/230890438-c988cb97-9bf0-4ca1-be3b-9a06a9ff96e0.png)
